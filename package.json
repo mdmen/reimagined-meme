@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "author": "Dmitry Menov",
+  "scripts": {
+    "lint": "eslint src && flow",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.1",
@@ -10,6 +16,9 @@
     "@babel/preset-flow": "^7.10.1",
     "@babel/preset-react": "^7.10.1",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -20,10 +29,30 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "2.5.0",
     "flow-bin": "^0.125.1",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.7",
     "prettier": "^2.0.5"
   },
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>src/tests/config.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "flow && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "jest --bail --findRelatedTests"
+    ]
   }
 }
